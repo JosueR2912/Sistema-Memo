@@ -41,6 +41,7 @@ import { MemosEnvComponent } from './components/memos/memos-env/memos-env.compon
 import { ReporteComponent } from './components/reporte/reporte.component';
 import { MessageModule } from 'primeng/message';
 
+
 @NgModule({
     declarations: [
         AppComponent,

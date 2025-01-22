@@ -150,7 +150,7 @@ async generateChartuser() {
 getMemosUserRec(){
   let auxCont = [];
   for (const memo of this.memos) {
-    if(memo.toDepartamento == this.server.user?.id_depart){
+    if(memo.toDepartamento == this.server.user?.id_depart || memo.copia_para == this.server.user?.id_depart){
       auxCont.push(memo);
     }
 }
@@ -160,7 +160,7 @@ getMemosUserRec(){
 getMemosStatusUserRec(status: string){
   let auxCont = [];
   for (const memo of this.memos) {
-    if(memo.toDepartamento == this.server.user?.id_depart && memo.status == status){
+    if(memo.toDepartamento == this.server.user?.id_depart && memo.status == status || memo.copia_para == this.server.user?.id_depart && memo.status == status){
       auxCont.push(memo);
     }
   }

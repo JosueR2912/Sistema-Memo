@@ -144,7 +144,7 @@ export class NavbarComponent implements OnInit {
                 icon: 'pi pi-fw pi-user',
                 items: [
                     {
-                    label: 'Eviar nuevo memo',
+                    label: 'Enviar nuevo memo',
                     icon: 'pi pi-send',
                     routerLink: '/memoCreate'
                     },

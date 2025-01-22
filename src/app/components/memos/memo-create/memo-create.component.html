@@ -23,7 +23,7 @@
                 </option>
             </select>
         </div>
-        <span class="text-danger semibold mt-1 ml-10" *ngIf="hasError('toDepartamento')">
+        <span class="text-black semibold mt-1 ml-10" *ngIf="hasError('toDepartamento')">
             {{hasError('toDepartamento')}}
         </span>
         <div class="d-flex  pe-2 py-3 col-md-4 w-[90%]">
@@ -35,7 +35,7 @@
                 </option>
             </select>    
         </div>
-        <span class="text-danger semibold mt-1 ml-10" *ngIf="hasError('para')">
+        <span class="text-black semibold mt-1 ml-10" *ngIf="hasError('para')">
             {{hasError('para')}}
         </span>
         <div class="d-flex  pe-2 py-3 col-md-4 w-[90%]">
@@ -45,26 +45,67 @@
                 
             </span>  
         </div>
-        <span class="text-danger semibold mt-1 ml-10" *ngIf="hasError('asunto')">
+        <span class="text-black semibold mt-1 ml-10" *ngIf="hasError('asunto')">
             {{hasError('asunto')}}
         </span>
         <div class="d-flex  pe-2 py-3 col-md-4 w-[90%]">
             <span class="p-float-label w-100">
                 <textarea name="contenido" id="contenido" [value]="body.contenido" [(ngModel)]="body.contenido" formControlName="contenido" [readonly]="!editable" class="border-black border-2 rounded-md w-100 resize-none h-80"  ></textarea>
-                <label for="contenido">Contenido del memo<small class="required ms-1">*</small></label>
             </span>
         </div>
-        <span class="text-danger semibold mt-1 ml-10" *ngIf="hasError('contenido')">
+        <span class="text-black semibold mt-1 ml-10" *ngIf="hasError('contenido')">
             {{hasError('contenido')}}
         </span>
     </div>
     <div class="d-flex w-100 mt-4">
         <div class="ms-auto"></div>
-        <div class="ms-md-2">
+        <div class="ms-md-2 space-x-4">
+            <button (click)="showDialog()" class="btn bg-blue-400">
+                Previsualzar memo
+            </button>
             <button (click)="submit()" class="btn bg-green-500 ">
-               
                 Enviar
             </button>
         </div>
     </div>
 </form>
+<div class="card flex justify-center">
+    <p-dialog class="" header="MEMORANDO"  [modal]="true" [(visible)]="visible" [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="false">
+        <div class="d-flex flex-col w-[100%] bg-white mt-20 h-[90vh] relative p-2">
+            <div class="ml-3" >
+                <img class="w-44" src="../../../../assets/img/LOGOS CORPOLARA 2.png" alt="">
+            </div>
+            <div class="w-full flex justify-center font-bold">
+                MEMORANDO
+            </div>
+            <div class="ml-6 font-bold">
+                <p>Codigo {{body.codigo_memo}}</p>
+                <br>
+                <p>Para: {{getdepartamento(body.toDepartamento)}}</p>
+                <p>Copia para: {{getdepartamento(body.copia_para)}}</p>
+                <p>De: {{getdepartamento(body.fromDepartamento)}}</p>
+                <p>Fecha: {{body.fecha | date:'dd/MM/yyyy'}}</p>
+                <p>Asunto: {{body.asunto}}</p>
+            </div>
+            <div class="ml-10 mt-6 text-justify mx-auto w-[90%]">
+                <p>{{body.contenido}}</p>
+            </div>
+            <div class="flex justify-center w-full font-bold flex-col items-center absolute bottom-52">
+                <p>
+                    Atentamente
+                </p>
+                <img [src]="getFirma(body.id_user)" alt="" class="w-36 h-20">
+                <p class="uppercase">
+                    {{getUser(body.id_user)}}
+                </p>
+                <p class="uppercase">
+                    {{getCargoUser(body.id_user)}}
+                </p>
+            </div>
+            <div class="absolute bottom-0 flex w-full justify-center">
+                <img class="w-[90%] h-40" src="../../../../assets/img/footerMemo.png" alt="">
+            </div>
+         </div>
+    </p-dialog>
+</div>
+

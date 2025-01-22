@@ -29,7 +29,7 @@
     </div>
     </div>
 </div>
-<div *ngIf="server.user?.tipo !== 'admin'">
+<div class="min-h-[100vh]" *ngIf="server.user?.tipo !== 'admin'">
     <div *ngIf="getMemosStatusUserRec('SIN ATENDER') != 0" class="bg-red-400 text-white font-bold text-xl p-2">Tienes {{getMemosStatusUserRec("SIN ATENDER")}} nuevos memos sin atender</div>
     <div>
         <div class="text-4xl text-white font-bold">

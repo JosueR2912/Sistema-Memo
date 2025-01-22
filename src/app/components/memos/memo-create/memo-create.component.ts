@@ -8,7 +8,10 @@ import { clone } from 'src/app/services';
 import { Users } from 'src/app/models/users';
 import { Departamentos } from 'src/app/models/departamentos';
 import { UiService } from 'src/app/services/ui.service';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import { Cargos } from 'src/app/models/cargos';
+import { Firma } from 'src/app/models/firmas';
+import { Dialog } from 'primeng/dialog';
 
 
 @Component({
@@ -29,13 +32,24 @@ export class MemoCreateComponent implements OnInit {
   public memosFilter: Memos[] = [];
   public countMemos: any = 0;
   public usersFilter: Users[] = [];
+  public firmas: any[] = [];
+  public cargos: any[] = [];
 
   constructor(public server: ServerService,
     private ui: UiService,
     private router: Router,
     private activatedRoute: ActivatedRoute) { }
 
+    visible: boolean = false;
+
+    showDialog() {
+        this.visible = true;
+    }
+
   async ngOnInit(){
+    this.users = (await this.server.getAllUsers(new Pagination(1, 1000000)))?.items;
+    this.firmas = (await this.server.getAllFirmas(new Pagination(1, 1000000)))?.items;
+    this.cargos = (await this.server.getAllCargos(new Pagination(1, 1000000)))?.items;
     const params: any = this.activatedRoute.snapshot.params;
     this.id = params.id;
     this.body.toDepartamento = 0;
@@ -146,6 +160,23 @@ export class MemoCreateComponent implements OnInit {
           this.touch();
           this.ui.messageError('Por favor rellene los campos');
       }
+    }
+
+    getdepartamento(id: number) {
+      return this.departamentos.find(x => x.id === id)?.nombre_departamento;
+    }
+    getUser(id: number) {
+      const atentanmente = this.users.find(x => x.id === id);
+      return atentanmente?.grado_academico + ' ' + atentanmente?.nombre + ' ' + atentanmente?.apellido;
+    }
+    getFirma(id: number) {
+      let auxUser = this.users.find(x => x.id === id);
+      return this.firmas.find(x => x.id === auxUser?.id_firma)?.direccion;
+    }
+    getCargoUser(id: number) {
+      const aux = this.users.find(x => x.id === id);
+      const cargo = this.cargos.find(x => x.id === aux?.id_cargo);
+      return cargo?.nombre;
     }
    
   }
