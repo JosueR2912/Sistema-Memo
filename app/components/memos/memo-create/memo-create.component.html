@@ -1,0 +1,111 @@
+<form *ngIf="form" [formGroup]="form"  class="d-flex flex-column items-center  w-100 p-4 content--standard">
+    <div class="d-flex align-items-center w-100 mb-3">
+        <h1 *ngIf="!id" class="heading--desktop04 text-white font-bold text-4xl">
+            Crear Memo
+        </h1>
+        <h1 *ngIf="id" class="heading--desktop04">
+            Enviar nuevo memo
+        </h1>
+        <div class="ms-auto" *ngIf="server.user?.tipo === 'admin'">
+            <button class="btn btn--null" (click)="list()">
+                <i class="fa fa-list me-2"></i>
+                Ver memos enviados
+            </button>
+        </div>
+    </div>
+    <div class="flex flex-col items-center w-[70%] bg-[rgba(200,200,200,.7)] p-3 rounded-md">
+        <div class="d-flex space-x-2 pe-2 py-3 col-md-4 w-[90%]">
+            <p>Para el departamento</p>
+            <select class="p-multiselect" name="toDepartamento" id="toDepartamento" [value]="body.toDepartamento" [(ngModel)]="body.toDepartamento" formControlName="toDepartamento">
+                <option value="0">Seleccione el departamento</option>
+                <option *ngFor="let departamento of departamentos" [value]="departamento.id">
+                    {{departamento.nombre_departamento}}
+                </option>
+            </select>
+        </div>
+        <span class="text-black semibold mt-1 ml-10" *ngIf="hasError('toDepartamento')">
+            {{hasError('toDepartamento')}}
+        </span>
+        <div class="d-flex  pe-2 py-3 col-md-4 w-[90%]">
+        <p>Copia para</p>
+            <select class="p-multiselect w-[70%]" name="copia_para" id="copia_para" [value]="body.copia_para" [(ngModel)]="body.copia_para" formControlName="copia_para">
+                <option value="0">Seleccione un departamento</option>
+                <option *ngFor="let departamento of departamentos" [value]="departamento.id">
+                    {{departamento.nombre_departamento}}
+                </option>
+            </select>    
+        </div>
+        <span class="text-black semibold mt-1 ml-10" *ngIf="hasError('para')">
+            {{hasError('para')}}
+        </span>
+        <div class="d-flex  pe-2 py-3 col-md-4 w-[90%]">
+            <p>Asunto del memo</p>
+            <span class="p-float-label w-100">
+                <input autocomplete="off" required formControlName="asunto" [(ngModel)]="body.asunto" [readonly]="!editable" id="asunto" class="input--standard w-100" type="text" pInputText> 
+                
+            </span>  
+        </div>
+        <span class="text-black semibold mt-1 ml-10" *ngIf="hasError('asunto')">
+            {{hasError('asunto')}}
+        </span>
+        <div class="d-flex  pe-2 py-3 col-md-4 w-[90%]">
+            <span class="p-float-label w-100">
+                <textarea name="contenido" id="contenido" [value]="body.contenido" [(ngModel)]="body.contenido" formControlName="contenido" [readonly]="!editable" class="border-black border-2 rounded-md w-100 resize-none h-80"  ></textarea>
+            </span>
+        </div>
+        <span class="text-black semibold mt-1 ml-10" *ngIf="hasError('contenido')">
+            {{hasError('contenido')}}
+        </span>
+    </div>
+    <div class="d-flex w-100 mt-4">
+        <div class="ms-auto"></div>
+        <div class="ms-md-2 space-x-4">
+            <button (click)="showDialog()" class="btn bg-blue-400">
+                Previsualzar memo
+            </button>
+            <button (click)="submit()" class="btn bg-green-500 ">
+                Enviar
+            </button>
+        </div>
+    </div>
+</form>
+<div class="card flex justify-center">
+    <p-dialog class="" header="MEMORANDO"  [modal]="true" [(visible)]="visible" [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="false">
+        <div class="d-flex flex-col w-[100%] bg-white mt-20 h-[90vh] relative p-2">
+            <div class="ml-3" >
+                <img class="w-44" src="../../../../assets/img/LOGOS CORPOLARA 2.png" alt="">
+            </div>
+            <div class="w-full flex justify-center font-bold">
+                M E M O R A N D O
+            </div>
+            <div class="ml-6 font-bold">
+                <p>N° {{body.codigo_memo}}</p>
+                <br>
+                <p>Para: {{getdepartamento(body.toDepartamento)}}</p>
+                <p>Copia para: {{getdepartamento(body.copia_para)}}</p>
+                <p>De: {{getdepartamento(body.fromDepartamento)}}</p>
+                <p>Fecha: {{body.fecha | date:'dd/MM/yyyy'}}</p>
+                <p>Asunto: {{body.asunto}}</p>
+            </div>
+            <div class="ml-10 mt-6 text-justify mx-auto w-[90%]">
+                <p>{{body.contenido}}</p>
+            </div>
+            <div class="flex justify-center w-full font-bold flex-col items-center absolute bottom-52">
+                <p>
+                    Atentamente
+                </p>
+                <img [src]="getFirma(body.id_user)" alt="" class="w-36 h-20">
+                <p class="uppercase">
+                    {{getUser(body.id_user)}}
+                </p>
+                <p class="uppercase">
+                    {{getCargoUser(body.id_user)}}
+                </p>
+            </div>
+            <div class="absolute bottom-0 flex w-full justify-center">
+                <img class="w-[90%] h-40" src="../../../../assets/img/footerMemo.png" alt="">
+            </div>
+         </div>
+    </p-dialog>
+</div>
+
