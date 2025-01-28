@@ -26,6 +26,13 @@ export class ReporteComponent implements OnInit {
  async ngOnInit() {
    
     this.departamentos = (await this.server.getAllDepartamentos(new Pagination(1, 1000)))?.items;
+    let aux = [];
+    for (const departamento of this.departamentos) {
+      if (departamento.status == "activo") {
+        aux.push(departamento);
+      }
+    }
+    this.departamentos = aux;
     await this.getMemos();
     console.log(this.memos);
     console.log(this.departamentos);

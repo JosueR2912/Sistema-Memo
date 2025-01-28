@@ -7,6 +7,7 @@ import { Memos } from '../models/memos';
 import { Departamentos } from '../models/departamentos';
 import { Cargos } from '../models/cargos';
 import { Firma } from '../models/firmas';
+import { reduce } from 'rxjs';
 
 const endpoint = 'http://localhost:3000';
 
@@ -334,6 +335,7 @@ async getAllDepartamentos(pagination: Pagination) {
     }
     return res;
 }
+
 async createDepartamento(body: Departamentos) {
     let res: any;
     try {

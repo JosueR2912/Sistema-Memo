@@ -13,7 +13,7 @@
             Enviar un Memo
         </button>
     </div>
-    <p-table tableStyleClass="bg-white" [value]="memosFilter" [paginator]="false" responsiveLayout="scroll" currentPageReportTemplate="{{pagination.count}} memos">
+    <p-table tableStyleClass="bg-white" [value]="memosFilter" [paginator]="true" [rows]="10" responsiveLayout="scroll" currentPageReportTemplate="{{pagination.count}} memos">
         <ng-template pTemplate="header" >
             <tr class="h-[85px] text-center">
                 <th class="text--desktop02 text-center">
@@ -68,7 +68,7 @@
                 </td>
                 <td class="text-center">
                     <a>
-                        {{departamentos[(item.fromDepartamento - 1)].nombre_departamento}}
+                        {{getNameDepartamento(item.fromDepartamento)}}
                     </a>
                 </td>
                 <td class="text-center">
@@ -83,7 +83,7 @@
                 </td>
                 <td class="text-center">
                     <a>
-                        {{item.para}}
+                        {{getNameDepartamento(item.toDepartamento)}}
                     </a>
                 </td>
                 <td class="text-center">
@@ -117,8 +117,5 @@
         <span class="text--desktop01 semibold ms-auto">
             {{memosFilter.length}} resultados
         </span>
-    </div>
-    <div class="d-flex w-100 place-content-center mt-2">
-        <app-paginator  [pagination]="pagination"></app-paginator>
     </div>
 </div>

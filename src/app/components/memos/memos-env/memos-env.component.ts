@@ -33,10 +33,9 @@ export class MemosEnvComponent implements OnInit {
     this.departamentos = (await this.server.getAllDepartamentos(new Pagination(1, 1000000)))?.items;
   }
 
-  async search(pagination: Pagination = new Pagination) {
-    this.pagination.page = pagination.page;
-    let resultado = await this.server.getAllMemos(this.pagination);
-    this.memos = resultado.items;
+  async search() {
+    let resultado = (await this.server.getAllMemos(new Pagination(1, 1000000)))?.items;;
+    this.memos = resultado
     this.pagination.refresh(resultado.count);
     console.log(resultado);
     this.memosFilter = [];
@@ -64,6 +63,17 @@ export class MemosEnvComponent implements OnInit {
     console.log(this.fecha);
     this.search();
   }
+  getNameDepartamento(id: number) {
+    let aux
+    for (const departamento of this.departamentos) {
+      if (departamento.id == id) {
+        aux = departamento.nombre_departamento;
+      }
+    }
+    return aux;
+  }
+
+
 async generateReport() {
     const doc = new jsPDF('l');
     doc.addImage("../../../../assets/img/LOGOS CORPOLARA 2.png", 'PNG', 10, 10, 55, 10);

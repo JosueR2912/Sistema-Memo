@@ -37,13 +37,20 @@ export class MemosComponent implements OnInit {
   
   async getDepartamentos() {
     this.departamentos = (await this.server.getAllDepartamentos(new Pagination(1, 1000000)))?.items;
+    let aux = [];
+    for (const departamento of this.departamentos) {
+      if (departamento.status == "activo") {
+        aux.push(departamento);
+      }
+    }
+    this.departamentos = aux;
+    console.log(this.departamentos);
   }
 
-  async search(pagination: Pagination = new Pagination) {
+  async search() {
     let auxFecha
-    this.pagination.page = pagination.page;
-    let resultado = await this.server.getAllMemos(this.pagination);
-    this.memos = resultado.items;
+    let resultado = (await this.server.getAllMemos(new Pagination(1, 1000000)))?.items;
+    this.memos = resultado;
     this.pagination.refresh(resultado.count);
     console.log(resultado);
     if (this.server.user.tipo == 'admin') {
@@ -86,6 +93,15 @@ export class MemosComponent implements OnInit {
     }
   }
  
+  getNameDepartamento(id: number) {
+    let aux
+    for (const departamento of this.departamentos) {
+      if (departamento.id == id) {
+        aux = departamento.nombre_departamento;
+      }
+    }
+    return aux;
+  }
 
   onChangeDepartamento() {
     console.log(this.seletedDepartamento);

@@ -74,26 +74,30 @@ export class MemoComponent implements OnInit {
 
   async generatePDF() {
     const doc = new jsPDF();
-    doc.addImage("../../../../assets/img/LOGOS CORPOLARA 2.png", 'PNG', 10, 10, 55, 10);
+    doc.addImage("../../../../assets/img/LOGOS CORPOLARA 2.png", 'PNG', 25.4, 10, 55, 10);
     doc.setFontSize(15);
-    doc.text("Memorando", 83, 30);
+    doc.setFont("Times", "bold");
+    doc.text("M E M O R A N D O", 83, 30);
     doc.setFontSize(12);
-    doc.text('Codigo: ' + this.body.codigo_memo,20, 40);
+    doc.text('N° ' + this.body.codigo_memo,25.4, 40);
     let aux = new Date(this.body.fecha);
-    doc.text('Fecha: ' + aux.getDate() + '/' + (aux.getMonth() + 1) + '/' + aux.getFullYear(),20, 50);
     if (this.body.copia_para !== 0) {
-      doc.text('Copia para: ' + this.getdepartamento(this.body.copia_para),20, 60);
-      doc.text('Para: ' + this.getdepartamento(this.body.toDepartamento),20, 70);
-      doc.text( 'De: ' + this.getdepartamento(this.body.fromDepartamento),20, 80);
-      doc.text('Asunto: ' + this.body.asunto,20, 90);
-      doc.text(this.body.contenido, 30,100);
+      doc.text('Para: ' + this.getdepartamento(this.body.toDepartamento),25.4, 45);
+      doc.text('Copia para: ' + this.getdepartamento(this.body.copia_para),25.4, 50);
+      doc.text( 'De: ' + this.getdepartamento(this.body.fromDepartamento),25.4, 55);
+      doc.text('Fecha: ' + aux.getDate() + '/' + (aux.getMonth() + 1) + '/' + aux.getFullYear(),25.4, 60);
+      doc.text('Asunto: ' + this.body.asunto,25.4, 65);
+      doc.setFont("Times", "normal");
+      doc.text(this.body.contenido, 30,75);
     } else{
-      doc.text('Para: ' + this.getdepartamento(this.body.toDepartamento),20, 60);
-    doc.text( 'De: ' + this.getdepartamento(this.body.fromDepartamento),20, 70);
-    doc.text('Asunto: ' + this.body.asunto,20, 80);
-    doc.text(this.body.contenido, 30,90);
+      doc.text('Para: ' + this.getdepartamento(this.body.toDepartamento),25.4, 45);
+    doc.text( 'De: ' + this.getdepartamento(this.body.fromDepartamento),25.4, 50);
+    doc.text('Fecha: ' + aux.getDate() + '/' + (aux.getMonth() + 1) + '/' + aux.getFullYear(),25.4, 55);
+    doc.text('Asunto: ' + this.body.asunto,25.4, 60);
+    doc.setFont("Times", "normal");
+    doc.text(this.body.contenido, 30,70);
     }
-    
+    doc.setFont("Times", "bold");
     doc.text("Atentamente", 90, 220);
     doc.addImage(`${this.getFirma(this.body.id_user)}`, 'PNG', 80, 222, 55, 30);
     doc.text(`${this.getUser(this.body.id_user)}`, 80, 250);

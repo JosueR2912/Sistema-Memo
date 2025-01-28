@@ -40,7 +40,7 @@ export class DepartamentosComponent implements OnInit {
 async remove() {
   const items: any = this.departamentos.filter((x: any) => x.$_select);
   for (const item of items) {
-      await this.server.logicDeleteusers(item);}
+      await this.server.departamentoDelete(item);}
       this.search();
 
   this.ui.messageSuccess(`${items.length} elementos eliminados.`);

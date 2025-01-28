@@ -61,6 +61,13 @@ export class MemoCreateComponent implements OnInit {
 
     this.memos = (await this.server.getAllMemos(new Pagination(1, 1000000)))?.items || [];
     this.departamentos = (await this.server.getAllDepartamentos(new Pagination(1, 1000000)))?.items;
+    let aux = [];
+    for (const departamento of this.departamentos) {
+      if (departamento.status == "activo") {
+        aux.push(departamento);
+      }
+    }
+    this.departamentos = aux;
     this.memosFilter = this.memos.filter((x: any) => x.fromDepartamento === this.server.user?.id_depart);
     await this.memosFilterDate();
     console.log(this.memosFilter);

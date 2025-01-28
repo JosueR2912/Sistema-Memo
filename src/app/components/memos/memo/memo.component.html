@@ -1,16 +1,16 @@
-<div class="w-100 flex justify-center mt-4 h-[100vh]">
+<div class="w-100 flex justify-center mt-4 p-4">
 <h2 class="text-4xl font-bold text-center text-white">
     Memo
 </h2>
- <div class="d-flex flex-col w-[50%] bg-white mt-20 h-[90vh] relative p-2">
+ <div class="d-flex flex-col w-[800px] bg-white mt-20 h-[1000px] relative p-2">
     <div class="ml-3" >
         <img class="w-44" src="../../../../assets/img/LOGOS CORPOLARA 2.png" alt="">
     </div>
     <div class="w-full flex justify-center font-bold">
-        MEMORANDO
+        M E M O R A N D O
     </div>
     <div class="ml-6 font-bold">
-        <p>Codigo {{body.codigo_memo}}</p>
+        <p>N° {{body.codigo_memo}}</p>
         <br>
         <p>Para: {{getdepartamento(body.toDepartamento)}}</p>
         <p>Copia para: {{getdepartamento(body.copia_para)}}</p>
