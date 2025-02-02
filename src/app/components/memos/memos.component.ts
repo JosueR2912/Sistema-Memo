@@ -79,7 +79,10 @@ export class MemosComponent implements OnInit {
     }else{
       this.memosFilter = [];
       for (const memo of this.memos) {
-        if (memo.toDepartamento == this.server.user.id_depart || memo.copia_para == this.server.user.id_depart) {
+        memo.copia_para = memo.copia_para.split(',');
+        let aux = memo.copia_para.findIndex((x: number) => x == this.server.user.id_depart);
+      
+        if (memo.toDepartamento == this.server.user.id_depart || aux != -1) {
           if (this.fecha == 0) {
             this.memosFilter.unshift(memo);
           }else{

@@ -74,7 +74,7 @@ export class HomeComponent implements OnInit {
     });
    }
   async getMemos() {
-    this.memos = (await this.server.getAllMemos(new Pagination(1, 1000)))?.items;
+    this.memos = (await this.server.getAllMemos(new Pagination(1, 100000)))?.items;
   }
   async getDepartamentos() {
     this.departamentos = (await this.server.getAllDepartamentos(new Pagination(1, 1000000)))?.items;
@@ -150,7 +150,9 @@ async generateChartuser() {
 getMemosUserRec(){
   let auxCont = [];
   for (const memo of this.memos) {
-    if(memo.toDepartamento == this.server.user?.id_depart || memo.copia_para == this.server.user?.id_depart){
+    let a = memo.copia_para.split(',');
+    let aux = a.findIndex((x: number) => x == this.server.user?.id_depart);
+    if(memo.toDepartamento == this.server.user?.id_depart || aux != -1){
       auxCont.push(memo);
     }
 }
@@ -160,7 +162,9 @@ getMemosUserRec(){
 getMemosStatusUserRec(status: string){
   let auxCont = [];
   for (const memo of this.memos) {
-    if(memo.toDepartamento == this.server.user?.id_depart && memo.status == status || memo.copia_para == this.server.user?.id_depart && memo.status == status){
+    let a = memo.copia_para.split(',');
+    let aux = a.findIndex((x: number) => x == this.server.user?.id_depart);
+    if(memo.toDepartamento == this.server.user?.id_depart && memo.status == status || aux != -1 && memo.status == status){
       auxCont.push(memo);
     }
   }

@@ -14,6 +14,7 @@ import { Firma } from 'src/app/models/firmas';
 import { Dialog } from 'primeng/dialog';
 
 
+
 @Component({
   selector: 'app-memo-create',
   templateUrl: './memo-create.component.html',
@@ -34,6 +35,9 @@ export class MemoCreateComponent implements OnInit {
   public usersFilter: Users[] = [];
   public firmas: any[] = [];
   public cargos: any[] = [];
+  public copia: any[] = [];
+  public prueba: any[] = [];
+  
 
   constructor(public server: ServerService,
     private ui: UiService,
@@ -152,6 +156,8 @@ export class MemoCreateComponent implements OnInit {
       if (this.form.valid && this.body.toDepartamento !== 0) {
         if (this.body.copia_para == undefined) {
           this.body.copia_para = 0;
+        } else {
+          this.body.copia_para = `${this.copia}`;
         }
         console.log(this.body);
         console.log(this.body.codigo_memo);
@@ -184,6 +190,18 @@ export class MemoCreateComponent implements OnInit {
       const aux = this.users.find(x => x.id === id);
       const cargo = this.cargos.find(x => x.id === aux?.id_cargo);
       return cargo?.nombre;
+    }
+    selectedCopia(){
+      let auxcopia
+      auxcopia = this.body.copia_para;
+      this.copia.push(auxcopia);
+      console.log(this.copia);
+    }
+    converttoInt(str: string) {
+      return parseInt(str);
+    }
+    eliminarCopia(copia: number){
+      this.copia = this.copia.filter(x => x !== copia);
     }
    
   }

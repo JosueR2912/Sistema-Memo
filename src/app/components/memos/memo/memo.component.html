@@ -13,7 +13,7 @@
         <p>N° {{body.codigo_memo}}</p>
         <br>
         <p>Para: {{getdepartamento(body.toDepartamento)}}</p>
-        <p>Copia para: {{getdepartamento(body.copia_para)}}</p>
+        <p *ngIf="body.copia_para !== '0'">Copia para: {{getCopias()}}</p>
         <p>De: {{getdepartamento(body.fromDepartamento)}}</p>
         <p>Fecha: {{body.fecha | date:'dd/MM/yyyy'}}</p>
         <p>Asunto: {{body.asunto}}</p>

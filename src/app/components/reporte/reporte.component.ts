@@ -25,7 +25,7 @@ export class ReporteComponent implements OnInit {
 
  async ngOnInit() {
    
-    this.departamentos = (await this.server.getAllDepartamentos(new Pagination(1, 1000)))?.items;
+    this.departamentos = (await this.server.getAllDepartamentos(new Pagination(1, 10000)))?.items;
     let aux = [];
     for (const departamento of this.departamentos) {
       if (departamento.status == "activo") {
@@ -40,7 +40,7 @@ export class ReporteComponent implements OnInit {
     console.log(this.filter);
   }
   async getMemos() {
-    this.memos = (await this.server.getAllMemos(new Pagination(1, 10)))?.items;
+    this.memos = (await this.server.getAllMemos(new Pagination(1, 10000000)))?.items;
 
   }
   async sortMemos(){
@@ -72,7 +72,7 @@ export class ReporteComponent implements OnInit {
             status_atendidos: this.memos.filter((x:any)=> x.fromDepartamento === item.id && x.status === "ATENDIDO" && new Date(x.fecha).getFullYear() == this.selectedFecha).length,
             status_sinAtender: this.memos.filter((x:any)=> x.fromDepartamento === item.id && x.status === "SIN ATENDER" && new Date(x.fecha).getFullYear() == this.selectedFecha).length,
             status_proceso : this.memos.filter((x:any)=> x.fromDepartamento === item.id && x.status === "EN PROCESO" && new Date(x.fecha).getFullYear() == this.selectedFecha).length,
-            memos_recibidos: this.memos.filter((x:any)=> x.toDepartamento === item.id && new Date(x.fecha).getFullYear() == this.selectedFecha).length,
+            memos_recibidos: this.memos.filter((x:any)=> x.toDepartamento === item.id && new Date(x.fecha).getFullYear() == this.selectedFecha || x.copia_para.split(',').findIndex((x: number) => x === item.id) !== -1 && new Date(x.fecha).getFullYear() == this.selectedFecha).length,
             statusRe_atendidos: this.memos.filter((x:any)=> x.toDepartamento === item.id && x.status === "ATENDIDO" && new Date(x.fecha).getFullYear() == this.selectedFecha).length,
             statusRe_sinAtender: this.memos.filter((x:any)=> x.toDepartamento === item.id && x.status === "SIN ATENDER" && new Date(x.fecha).getFullYear() == this.selectedFecha).length,
             statusRe_proceso : this.memos.filter((x:any)=> x.toDepartamento === item.id && x.status === "EN PROCESO" && new Date(x.fecha).getFullYear() == this.selectedFecha).length,

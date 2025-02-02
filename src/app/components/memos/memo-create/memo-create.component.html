@@ -26,9 +26,19 @@
         <span class="text-black semibold mt-1 ml-10" *ngIf="hasError('toDepartamento')">
             {{hasError('toDepartamento')}}
         </span>
-        <div class="d-flex  pe-2 py-3 col-md-4 w-[90%]">
+        <div class="flex flex-col  pe-2 py-3 col-md-4 w-[90%]">
         <p>Copia para</p>
-            <select class="p-multiselect w-[70%]" name="copia_para" id="copia_para" [value]="body.copia_para" [(ngModel)]="body.copia_para" formControlName="copia_para">
+           <div class="grid grid-cols-4 space-x-3 p-3 space-y-3">
+            <div *ngFor = "let copia of copia" class="rounded-lg bg-blue-500 p-2 text-white flex justify-center items-center">
+                <p >
+                   {{getdepartamento(converttoInt(copia))}}
+                </p>
+                <span (click)="eliminarCopia(copia)" class="bg-red-600 text-white rounded-full py-1 px-2 text-xs text-center box-border cursor-pointer">
+                    x
+                </span>
+            </div>
+           </div>
+            <select class="p-multiselect w-[70%]" name="copia_para" id="copia_para" (change)="selectedCopia()" [value]="body.copia_para" [(ngModel)]="body.copia_para" formControlName="copia_para">
                 <option value="0">Seleccione un departamento</option>
                 <option *ngFor="let departamento of departamentos" [value]="departamento.id">
                     {{departamento.nombre_departamento}}
