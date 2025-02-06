@@ -52,7 +52,7 @@ export class UserComponent implements OnInit {
           username: new FormControl([this.body.username, Validators.required]),
           password: new FormControl([this.body.password, Validators.required]),
           email: new FormControl([this.body.correo, Validators.required]),
-          grado_academico: new FormControl(this.body.grado_academico, Validators.required),
+          grado_academico: new FormControl(this.body.grado_academico),
           cargo: new FormControl(this.body.id_cargo, Validators.required),
           role: new FormControl(this.body.id_role, Validators.required),
           departamento: new FormControl([this.body.id_depart, Validators.required]) 

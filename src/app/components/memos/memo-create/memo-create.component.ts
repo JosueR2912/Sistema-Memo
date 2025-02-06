@@ -83,6 +83,7 @@ export class MemoCreateComponent implements OnInit {
       asunto: new FormControl([this.body.asunto, Validators.required]),
       contenido: new FormControl(this.body.contenido, Validators.required),
       toDepartamento: new FormControl(this.body.toDepartamento, Validators.required),
+      redactadoPor: new FormControl(this.body.redactadoPor, Validators.required),
     });
     this.body.fecha = new Date();
     this.body.de = this.server.user?.nombre + ' ' + this.server.user?.apellido;

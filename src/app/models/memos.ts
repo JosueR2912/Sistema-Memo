@@ -10,6 +10,7 @@ export class Memos {
     public fecha!:Date;
     public fromDepartamento!: number;
     public toDepartamento!: number;
+    public redactadoPor!: string;
     public status!: string;
     public status_delete!: string;
     public id_user!: number;

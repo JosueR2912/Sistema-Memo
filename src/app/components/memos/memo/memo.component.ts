@@ -100,7 +100,8 @@ export class MemoComponent implements OnInit {
     doc.text("Atentamente", 90, 220);
     doc.addImage(`${this.getFirma(this.body.id_user)}`, 'PNG', 80, 222, 55, 30);
     doc.text(`${this.getUser(this.body.id_user)}`, 80, 250);
-    doc.text(`${this.getCargoUser(this.body.id_user)}`, 98, 260);
+    doc.text(`${this.getCargoUser(this.body.id_user)}`, 98, 255);
+    doc.text(`${this.body.redactadoPor}`, 25.4, 262);
     doc.addImage("../../../../assets/img/footerMemo.png", 'PNG', 5, 265, 205, 35);
     doc.save(`Memo_${this.body.codigo_memo}.pdf`);
   }
