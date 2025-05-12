@@ -45,6 +45,7 @@ export class MemoComponent implements OnInit {
 
   async init() {
       const select = await this.server.getMemo(this.id);
+      console.log(select);
       if (select?.response) {
         this.body = select.response[0];
         console.log(this.body);
@@ -82,7 +83,7 @@ export class MemoComponent implements OnInit {
     let aux = new Date(this.body.fecha);
     if (this.body.copia_para !== 0) {
       doc.text('Para: ' + this.getdepartamento(this.body.toDepartamento),25.4, 45);
-      doc.text('Copia para: ' + this.getCopias(),25.4, 50);
+      doc.text('Copia para: ' + this.getdepartamento(this.body.copia_para),25.4, 50);
       doc.text( 'De: ' + this.getdepartamento(this.body.fromDepartamento),25.4, 55);
       doc.text('Fecha: ' + aux.getDate() + '/' + (aux.getMonth() + 1) + '/' + aux.getFullYear(),25.4, 60);
       doc.text('Asunto: ' + this.body.asunto,25.4, 65);
@@ -100,8 +101,7 @@ export class MemoComponent implements OnInit {
     doc.text("Atentamente", 90, 220);
     doc.addImage(`${this.getFirma(this.body.id_user)}`, 'PNG', 80, 222, 55, 30);
     doc.text(`${this.getUser(this.body.id_user)}`, 80, 250);
-    doc.text(`${this.getCargoUser(this.body.id_user)}`, 98, 255);
-    doc.text(`${this.body.redactadoPor}`, 25.4, 262);
+    doc.text(`${this.getCargoUser(this.body.id_user)}`, 98, 260);
     doc.addImage("../../../../assets/img/footerMemo.png", 'PNG', 5, 265, 205, 35);
     doc.save(`Memo_${this.body.codigo_memo}.pdf`);
   }
@@ -118,15 +118,6 @@ export class MemoComponent implements OnInit {
       let select = await this.server.editMemo(this.body);
       console.log(select);
     }
-  }
-  getCopias(){
-    let aux = this.body.copia_para.split(',');
-    let texto = '';
-    for (const copia of aux) {
-      texto += `${this.getdepartamento(parseInt(copia))}, `;
-    }
-    return texto.slice(0, -2);
-    
   }
 
 }
