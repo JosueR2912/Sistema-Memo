@@ -3,8 +3,8 @@
     Memo
 </h2>
  <div class="d-flex flex-col w-[800px] bg-white mt-20 h-[1000px] relative p-2">
-    <div class="ml-3" >
-        <img class="w-44" src="../../../../assets/img/LOGOS CORPOLARA 2.png" alt="">
+    <div class="ml-3 w-full"  >
+        <img class="w-[95%]" src="../../../../assets/img/CINTILLO SUPERIOR - HOJA MEMBRETADA.png" alt="">
     </div>
     <div class="w-full flex justify-center font-bold">
         M E M O R A N D O
@@ -13,12 +13,12 @@
         <p>N° {{body.codigo_memo}}</p>
         <br>
         <p>Para: {{getdepartamento(body.toDepartamento)}}</p>
-        <p *ngIf="body.copia_para !== '0'">Copia para: {{getCopias()}}</p>
+        <p *ngIf="body.copia_para !== 0 && getCopias() != 'undefined'">Copia para: {{getCopias()}}</p>
         <p>De: {{getdepartamento(body.fromDepartamento)}}</p>
         <p>Fecha: {{body.fecha | date:'dd/MM/yyyy'}}</p>
         <p>Asunto: {{body.asunto}}</p>
     </div>
-    <div class="ml-10 mt-6 text-justify mx-auto w-[90%]">
+    <div class="ml-10 mt-6 text-justify mx-auto w-[90%] max-h-[400px] overflow-y-auto">
         <p>{{body.contenido}}</p>
     </div>
     <div class="flex justify-center w-full font-bold flex-col items-center absolute bottom-52">
@@ -32,12 +32,15 @@
         <p class="uppercase">
             {{getCargoUser(body.id_user)}}
         </p>
+        <p class="text-center text-xs w-[50%]" *ngIf="getProvidencia(body.id_user) != ''">
+            Segun Providencia Administrativa {{getProvidencia(body.id_user)}}
+        </p>
     </div>
     <div class="absolute bottom-[170px] flex ml-10">
         <p class="font-bold">{{body.redactadoPor}}</p>
     </div>
     <div class="absolute bottom-0 flex w-full justify-center">
-        <img class="w-[90%] h-40" src="../../../../assets/img/footerMemo.png" alt="">
+        <img class="w-full h-40 -ml-4" src="../../../../assets/img/CINTILLO 2.png" alt="">
     </div>
  </div>
  <div *ngIf="body.id_user != server.user.id || server.user.tipo == 'admin'">
