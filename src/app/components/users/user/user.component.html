@@ -114,10 +114,14 @@
                 <option ngValue="">ninguno</option>
                 <option ngValue="Ingeniero">Ingeniero</option>
                 <option ngValue="Licenciado">Licenciado</option>
-                <option value="Doctor">Doctor</option>
-                <option value="Doctora">Doctora</option>
-                <option value="Magister">Magister</option>
-                <option value="Tsu">Tsu</option>
+                <option ngValue="Licenciada">Licenciada</option>
+                <option ngValue="Doctor">Doctor</option>
+                <option ngValue="Doctora">Doctora</option>
+                <option ngValue="Magister">Magister</option>
+                <option ngValue="Tsu">Tsu</option>
+                <option ngValue="Arquitecto">Arquitecto</option>
+                <option ngValue="Arqutitecta">Arquitecta</option>
+
             </select>
         <span class="text-danger semibold mt-1 ms-1" *ngIf="hasError('grado_academico')">
             {{hasError('cargo')}}
@@ -127,6 +131,17 @@
             <input class="input--standard w-100" type="file" (change)="onFileChange($event)" accept="image/*" id="firma" name="firma">
             <img [src]="" alt="">
         </div>
+    </div>
+    <div class="d-flex w-100">
+        <div class="d-flex flex-column pe-2 py-3 col-md-4">
+            <span class="p-float-label w-100">
+                <input type="text" autocomplete="off" required formControlName="providencia" [(ngModel)]="body.providencia" [readonly]="!editable" id="providencia" class="input--standard w-100" type="text" pInputText> 
+                <label class="text-black" for="providencia">Providencia<small class="required ms-1">*</small></label>
+            </span>
+            <span class="text-danger semibold mt-1 ms-1" *ngIf="hasError('providencia')">
+                {{hasError('providencia')}}
+            </span>
+        </div> 
     </div>
     <div class="d-flex w-100 mt-4">
         <div class="ms-auto"></div>

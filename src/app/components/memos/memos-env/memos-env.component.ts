@@ -42,10 +42,10 @@ export class MemosEnvComponent implements OnInit {
     for (const memo of this.memos) {
       if (memo.fromDepartamento == this.server.user.id_depart) {
         if (this.fecha == 0) {
-          this.memosFilter.unshift(memo);
+          this.memosFilter.push(memo);
         } else{
           if (new Date(memo.fecha).getFullYear() == this.fecha) {
-            this.memosFilter.unshift(memo);
+            this.memosFilter.push(memo);
             } 
         }
       }
@@ -86,7 +86,7 @@ async generateReport() {
         ['Cod. Memo','De','Para','Asunto','Estado']
       ],
       body: [
-        ...this.memosFilter.map(x=>[x.codigo_memo,this.departamentos[(x.fromDepartamento - 1)].nombre_departamento,this.departamentos[(x.toDepartamento - 1)].nombre_departamento,x.asunto,x.status])
+        ...this.memosFilter.map(x=>[x.codigo_memo, this.getDto(x.fromDepartamento),this.getDto(x.toDepartamento),x.asunto,x.status])
       ]
     } )
 
@@ -94,6 +94,15 @@ async generateReport() {
   
   }
 
+  getDto(id:number):any{
+    let aux
+    for (const dto of this.departamentos) {
+      if(dto.id == id){
+        aux = dto.nombre_departamento
+      }
+    }
+    return aux;
+  }
 }
 
 

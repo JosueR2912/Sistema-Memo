@@ -26,10 +26,11 @@ export class UsersComponent implements OnInit {
   constructor(public server: ServerService, private router: Router , private ui: UiService) { }
  
 
-  ngOnInit(): void {
-    this.search();
-    this.getDepartamentos();
-    this.getCargos();
+  async ngOnInit(){
+    await this.search();
+   await this.getDepartamentos();
+    await this.getCargos();
+    await this.getUsers();
   }
   read(id: string) {
     this.router.navigate([`user/${id}`]);
@@ -40,10 +41,7 @@ create() {
 async search(pagination: Pagination = new Pagination) {
   this.pagination.page = pagination.page;
 
-  let resultado = await this.server.getAllUsers(this.pagination);
-  this.users = resultado.items;
-  this.pagination.refresh(resultado.count);
-  console.log(resultado);
+  await this.getUsers()
 }
 
 async remove() {
@@ -58,7 +56,7 @@ async remove() {
 }
 
   async getUsers() {
-    this.users = (await this.server.getAllUsers(new Pagination(1, 1000)))?.items;
+    this.users = (await this.server.getAllUsers(new Pagination(1, 10000)))?.items;
     console.log(this.users);
   }
   async getDepartamentos() {
@@ -70,4 +68,23 @@ async remove() {
     console.log(this.cargos);
   }
 
+  getCargo(id:number){
+    let aux;
+    for (const cargo of this.cargos) {
+      if(cargo.id == id){
+        aux = cargo.nombre;
+      }
+    }
+    return aux
+  }
+
+  getDto(id:number){
+    let aux;
+    for (const dto of this.departamentos) {
+      if(dto.id == id){
+        aux = dto.nombre_departamento;
+      }
+    }
+    return aux
+  }
 }

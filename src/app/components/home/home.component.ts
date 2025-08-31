@@ -102,7 +102,7 @@ export class HomeComponent implements OnInit {
 getMemosUser(){
   let auxCont = [];
   for (const memo of this.memos) {
-    if(memo.id_user == this.server.user?.id){
+    if(memo.fromDepartamento == this.server.user?.id_depart){
       auxCont.push(memo);
     }
   }
@@ -112,7 +112,7 @@ getMemosUser(){
 getMemosStatusUser(status: string){
   let auxCont = [];
   for (const memo of this.memos) {
-    if(memo.id_user == this.server.user?.id && memo.status == status){
+    if(memo.fromDepartamento == this.server.user?.id_depart && memo.status == status){
       auxCont.push(memo);
     }
   }

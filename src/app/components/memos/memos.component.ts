@@ -68,10 +68,10 @@ export class MemosComponent implements OnInit {
         for (const memo of this.memos) {
           auxFecha = new Date(memo.fecha).getFullYear();
           if (memo.toDepartamento == this.seletedDepartamento && this.fecha == 0) {
-              this.memosFilter.unshift(memo);          
+              this.memosFilter.push(memo);          
           } else if (memo.toDepartamento == this.seletedDepartamento && this.fecha != 0) {
             if (auxFecha == this.fecha) {
-              this.memosFilter.unshift(memo);
+              this.memosFilter.push(memo);
             }
           }
         }
@@ -84,11 +84,11 @@ export class MemosComponent implements OnInit {
       
         if (memo.toDepartamento == this.server.user.id_depart || aux != -1) {
           if (this.fecha == 0) {
-            this.memosFilter.unshift(memo);
+            this.memosFilter.push(memo);
           }else{
             auxFecha = new Date(memo.fecha).getFullYear();
             if (auxFecha == this.fecha) {
-              this.memosFilter.unshift(memo);
+              this.memosFilter.push(memo);
             }
           }
         }
@@ -96,7 +96,7 @@ export class MemosComponent implements OnInit {
     }
   }
  
-  getNameDepartamento(id: number) {
+  getNameDepartamento(id: number):any {
     let aux
     for (const departamento of this.departamentos) {
       if (departamento.id == id) {
@@ -134,7 +134,7 @@ export class MemosComponent implements OnInit {
         ['Cod. Memo','De','Para','Asunto','Estado']
       ],
       body: [
-        ...this.memosFilter.map(x=>[x.codigo_memo,this.departamentos[(x.fromDepartamento - 1)].nombre_departamento,this.departamentos[(x.toDepartamento - 1)].nombre_departamento,x.asunto,x.status])
+        ...this.memosFilter.map(x=>[x.codigo_memo,this.getNameDepartamento(x.fromDepartamento),this.getNameDepartamento(x.toDepartamento),x.asunto,x.status])
       ]
     } )
 

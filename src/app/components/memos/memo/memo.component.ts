@@ -78,7 +78,7 @@ export class MemoComponent implements OnInit {
     const doc = new jsPDF({
       format:"letter"
     });
-    doc.addImage("../../../../assets/img/CINTILLO SUPERIOR - HOJA MEMBRETADA.png", 'PNG', 10, 5, 200, 15);
+    doc.addImage("../../../../assets/img/CINTILLO SUPERIOR - HOJA MEMBRETADA.png", 'PNG', 25, 5, 175, 15);
     doc.setFontSize(15);
     doc.setFont("Times", "bold");
     doc.text("M E M O R A N D O", 83, 30);
@@ -206,7 +206,7 @@ async formatText(text:string, doc:any, y:number){
     } else {
       // Agrega imágenes antes de cambiar de página
       doc.addImage("../../../../assets/img/CINTILLO 2.png", 'PNG', 0, 245, 220, 35);
-      doc.addImage("../../../../assets/img/CINTILLO SUPERIOR - HOJA MEMBRETADA.png", 'PNG', 10, 5, 200, 15);
+      doc.addImage("../../../../assets/img/CINTILLO SUPERIOR - HOJA MEMBRETADA.png", 'PNG', 25, 5, 175, 15);
       doc.addPage();
 
       // Incrementa el contador de páginas
@@ -227,7 +227,7 @@ async formatText(text:string, doc:any, y:number){
     if(i > 0 ){
       currentY = 30;
     } 
-    doc.text(textAux[i], 30, currentY, { align: 'justify', maxWidth: doc.internal.pageSize.width - 48, lineHeightFactor: 1.5 });
+    doc.text(textAux[i], 25.4, currentY, { align: 'justify', maxWidth: doc.internal.pageSize.width - 48, lineHeightFactor: 1.5 });
     currentY += 5 * textAux[i].split('\n').length; // Actualiza la posición Y para la próxima línea si es necesario
   }
 }

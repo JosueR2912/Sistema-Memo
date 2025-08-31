@@ -42,6 +42,8 @@ export class UserComponent implements OnInit {
 
         if (this.id) {
             await this.init();
+        } else{
+          this.body.id_firma = 1;
         }
 
         this.form = new FormGroup({
@@ -53,11 +55,12 @@ export class UserComponent implements OnInit {
           password: new FormControl([this.body.password, Validators.required]),
           email: new FormControl([this.body.correo, Validators.required]),
           grado_academico: new FormControl(this.body.grado_academico),
+          providencia: new FormControl(this.body.providencia, Validators.required),
           cargo: new FormControl(this.body.id_cargo, Validators.required),
           role: new FormControl(this.body.id_role, Validators.required),
           departamento: new FormControl([this.body.id_depart, Validators.required]) 
       });
-      this.body.id_firma = 1;
+      
   }
   async init() {
     const select = await this.server.getUser(this.id);

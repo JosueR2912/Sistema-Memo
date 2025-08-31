@@ -90,7 +90,7 @@ export class ReporteComponent implements OnInit {
     autoTable (doc ,{
       margin: {top: 40, right: 10, bottom: 10, left: 10},
       head:[
-        ['Cod. Departamento','Nombre Departamento','Memos enviendos','Atendidos','En proceso','Sin atender','Memos recibidos','Atendidos','En proceso','Sin atender']
+        ['Cod. Departamento','Nombre Departamento','Memos enviados','Atendidos','En proceso','Sin atender','Memos recibidos','Atendidos','En proceso','Sin atender']
       ],
       body: [
         ...this.filter.map(x=>[x.codigo_departamento,x.nombre_departamento,x.memos_enviados,x.status_atendidos,x.status_proceso, x.status_sinAtender,x.memos_recibidos, x.statusRe_atendidos,x.statusRe_proceso, x.statusRe_sinAtender]) 

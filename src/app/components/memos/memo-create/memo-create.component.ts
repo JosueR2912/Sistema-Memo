@@ -74,7 +74,7 @@ export class MemoCreateComponent implements OnInit {
     this.departamentos = aux;
     this.memosFilter = this.memos.filter((x: any) => x.fromDepartamento === this.server.user?.id_depart);
     await this.memosFilterDate();
-    console.log(this.memosFilter);
+    
   
 
 
@@ -91,7 +91,7 @@ export class MemoCreateComponent implements OnInit {
     this.body.status = "SIN ATENDER";
     this.body.status_delete = 'activo';
     this.body.fromDepartamento = this.server.user?.id_depart;
-    this.body.codigo_memo = `${this.departamentos[this.server.user?.id_depart - 1].codigo_departamento}-${this.countMemos.padStart(3, '0')}-${new Date().getFullYear()}`; 
+    this.body.codigo_memo = `${this.getdet(this.server.user.id_depart)}-${this.countMemos.padStart(3, '0')}-${new Date().getFullYear()}`; 
   }
 
   async init() {
@@ -102,6 +102,16 @@ export class MemoCreateComponent implements OnInit {
     }
 
     this.cache = clone(this.body);
+}
+
+getdet(id:number):any{
+  let aux
+  for (const dto of this.departamentos) {
+    if(dto.id == id){
+      aux = dto.codigo_departamento;
+    }
+  }
+  return aux
 }
 
 
@@ -144,7 +154,7 @@ export class MemoCreateComponent implements OnInit {
       let fechaAct = new Date();
       for (const memo of this.memosFilter) {
         let fecha = new Date(memo.fecha);
-        if(fecha.getFullYear() == fechaAct.getFullYear()){
+        if(fecha.getFullYear() == fechaAct.getFullYear() && memo.status_delete == "activo"){
           aux.push(memo);
         }
       }
@@ -170,7 +180,7 @@ export class MemoCreateComponent implements OnInit {
                   this.router.navigate([`memo/${result}`]);
               }
           } 
-      } else {
+      }else {
           this.touch();
           this.ui.messageError('Por favor rellene los campos');
       }

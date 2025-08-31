@@ -34,7 +34,7 @@ export class DepartamentosComponent implements OnInit {
   create() {
     this.router.navigate(['departamento']);
   }
-  read(id: string) {
+  read(id: number) {
     this.router.navigate([`departamento/${id}`]);
 }
 async remove() {

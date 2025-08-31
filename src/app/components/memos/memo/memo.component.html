@@ -2,14 +2,14 @@
 <h2 class="text-4xl font-bold text-center text-white">
     Memo
 </h2>
- <div class="d-flex flex-col w-[800px] bg-white mt-20 h-[1000px] relative p-2">
-    <div class="ml-3 w-full"  >
-        <img class="w-[95%]" src="../../../../assets/img/CINTILLO SUPERIOR - HOJA MEMBRETADA.png" alt="">
+ <div class="d-flex flex-col w-[800px] bg-white mt-20 h-[1100px] relative p-2">
+    <div class="ml-3 w-full flex justify-center">
+        <img class="w-[90%]" src="../../../../assets/img/CINTILLO SUPERIOR - HOJA MEMBRETADA.png" alt="">
     </div>
     <div class="w-full flex justify-center font-bold">
         M E M O R A N D O
     </div>
-    <div class="ml-6 font-bold">
+    <div class="ml-12 font-bold">
         <p>N° {{body.codigo_memo}}</p>
         <br>
         <p>Para: {{getdepartamento(body.toDepartamento)}}</p>
@@ -18,7 +18,7 @@
         <p>Fecha: {{body.fecha | date:'dd/MM/yyyy'}}</p>
         <p>Asunto: {{body.asunto}}</p>
     </div>
-    <div class="ml-10 mt-6 text-justify mx-auto w-[90%] max-h-[400px] overflow-y-auto">
+    <div class="ml-16 mt-6 text-justify mx-auto w-[88%] max-h-[400px] overflow-y-auto">
         <p>{{body.contenido}}</p>
     </div>
     <div class="flex justify-center w-full font-bold flex-col items-center absolute bottom-52">
@@ -36,11 +36,11 @@
             Segun Providencia Administrativa {{getProvidencia(body.id_user)}}
         </p>
     </div>
-    <div class="absolute bottom-[170px] flex ml-10">
+    <div class="absolute bottom-[190px] flex ml-10">
         <p class="font-bold">{{body.redactadoPor}}</p>
     </div>
     <div class="absolute bottom-0 flex w-full justify-center">
-        <img class="w-full h-40 -ml-4" src="../../../../assets/img/CINTILLO 2.png" alt="">
+        <img class="w-full h-48 -ml-4 object-cover object-center" src="../../../../assets/img/CINTILLO 2.png" alt="">
     </div>
  </div>
  <div *ngIf="body.id_user != server.user.id || server.user.tipo == 'admin'">
