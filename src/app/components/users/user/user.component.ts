@@ -10,6 +10,12 @@ import { Roles } from 'src/app/models/roles';
 import { Pagination } from 'src/app/models/pagination.model';
 import { Departamentos } from 'src/app/models/departamentos';
 import { Firma } from 'src/app/models/firmas';
+import { FileUploadModule } from 'primeng/fileupload';
+
+interface UploadEvent {
+    originalEvent: Event;
+    files: File[];
+}
 
 @Component({
   selector: 'app-user',
@@ -27,6 +33,7 @@ export class UserComponent implements OnInit {
   public form!: FormGroup;
   public firmas: Firma[] = [];
   public firma: Firma= new Firma();
+  
 
   constructor(public server: ServerService,
     private ui: UiService,
@@ -149,6 +156,9 @@ async saveFirma(file:File){
       }
     }
 }
+ onUpload(event: UploadEvent) {
+        console.log(event);
+    }
 
 
 }

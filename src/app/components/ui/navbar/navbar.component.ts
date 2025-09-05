@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Sidebar } from 'primeng/sidebar';
 import { ServerService } from 'src/app/services/server';
+import {MenuComponent} from 'src/app/components/ui/menu/menu.component';
 
 
 @Component({

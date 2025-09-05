@@ -24,6 +24,8 @@ export class MemoComponent implements OnInit {
   public departamentos: Departamentos[] = [];
   public cache: Memos = new Memos();
   public editable: boolean = true;
+  public auxdate: Date = new Date();
+  public dateChange = new Date(2025,9,1);
 
   constructor(public server: ServerService,
     private ui: UiService,
@@ -48,6 +50,8 @@ export class MemoComponent implements OnInit {
       if (select?.response) {
         this.body = select.response[0];
         console.log(this.body);
+        this.auxdate = new Date(this.body.fecha);
+       
         this.users = (await this.server.getAllUsers(new Pagination(1, 1000000)))?.items;
         this.departamentos = (await this.server.getAllDepartamentos(new Pagination(1, 1000000)))?.items;
       } else {
@@ -78,7 +82,12 @@ export class MemoComponent implements OnInit {
     const doc = new jsPDF({
       format:"letter"
     });
-    doc.addImage("../../../../assets/img/CINTILLO SUPERIOR - HOJA MEMBRETADA.png", 'PNG', 25, 5, 175, 15);
+    if(this.auxdate >= this.dateChange){
+       doc.addImage("../../../../assets/img/CINTILLO SUPERIOR - HOJA MEMBRETADA.png", 'PNG', 25, 5, 175, 15);
+    } else{
+      doc.addImage("../../../../assets/img/LOGOS CORPOLARA 3.png", 'PNG', 20, 5, 60, 15);
+    }
+   
     doc.setFontSize(15);
     doc.setFont("Times", "bold");
     doc.text("M E M O R A N D O", 83, 30);
@@ -160,8 +169,12 @@ export class MemoComponent implements OnInit {
        }
     }
     
-   
-    doc.addImage("../../../../assets/img/CINTILLO 2.png", 'PNG', 0, 245, 220, 35);
+   if(this.auxdate >= this.dateChange){
+     doc.addImage("../../../../assets/img/CINTILLO 2.png", 'PNG', 0, 245, 220, 35);
+   }else{
+     doc.addImage("../../../../assets/img/footerMemo.png", 'PNG', 7, 245, 205, 35);
+   }
+
     doc.save(`Memo_${this.body.codigo_memo}.pdf`);
   }
 
@@ -205,8 +218,14 @@ async formatText(text:string, doc:any, y:number){
       auxCountline++;
     } else {
       // Agrega imágenes antes de cambiar de página
+      if(this.auxdate >= this.dateChange){
       doc.addImage("../../../../assets/img/CINTILLO 2.png", 'PNG', 0, 245, 220, 35);
       doc.addImage("../../../../assets/img/CINTILLO SUPERIOR - HOJA MEMBRETADA.png", 'PNG', 25, 5, 175, 15);
+      }{
+        doc.addImage("../../../../assets/img/footerMemo.png", 'PNG', 7, 245, 205, 35);
+        doc.addImage("../../../../assets/img/LOGOS CORPOLARA 3.png", 'PNG', 20, 5, 60, 15);
+      }
+      
       doc.addPage();
 
       // Incrementa el contador de páginas

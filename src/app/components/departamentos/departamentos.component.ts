@@ -4,6 +4,7 @@ import { ServerService } from 'src/app/services/server';
 import { Pagination } from 'src/app/models/pagination.model';
 import { Departamentos } from 'src/app/models/departamentos';
 import { UiService } from 'src/app/services/ui.service';
+import { Table } from 'primeng/table';
 
 
 @Component({
@@ -15,21 +16,16 @@ export class DepartamentosComponent implements OnInit {
   public departamentos: Departamentos[] = [];
   public pagination: Pagination = new Pagination();
   public filter: Departamentos = new Departamentos();
+  elimir: boolean = true;
+  searchValue: string | undefined;
 
 
   constructor(public server: ServerService, private router: Router, private ui: UiService) { }
 
-  ngOnInit(): void {
-    this.search();
+  async ngOnInit() {
+    this.departamentos = (await this.server.getAllDepartamentos(new Pagination(1, 1000000)))?.items;
   }
-  async search(pagination: Pagination = new Pagination) {
-    this.pagination.page = pagination.page;
-  
-    let resultado = await this.server.getAllDepartamentos(this.pagination);
-    this.departamentos = resultado.items;
-    this.pagination.refresh(resultado.count);
-    console.log(resultado);
-  }
+
 
   create() {
     this.router.navigate(['departamento']);
@@ -41,11 +37,21 @@ async remove() {
   const items: any = this.departamentos.filter((x: any) => x.$_select);
   for (const item of items) {
       await this.server.departamentoDelete(item);}
-      this.search();
-
+      
   this.ui.messageSuccess(`${items.length} elementos eliminados.`);
   }
-
+ clear(table: Table) {
+        table.clear();
+        this.searchValue = ''
+    }
+    async checkableselected(){
+       const items: any = this.departamentos.filter((x: any) => x.$_select);
+      if(items.length <= 0){
+        this.elimir = true;
+      }else{
+        this.elimir = false;
+      }
+    }
 
 
 }

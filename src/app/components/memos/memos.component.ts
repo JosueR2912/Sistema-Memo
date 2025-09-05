@@ -8,6 +8,7 @@ import { UiService } from 'src/app/services/ui.service';
 import { Users } from 'src/app/models/users';
 import { jsPDF } from "jspdf";
 import autoTable  from 'jspdf-autotable';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-memos',
@@ -24,6 +25,9 @@ export class MemosComponent implements OnInit {
   public users: Users[] = [];
   public fecha: number = 0;
   public fechas: number[] = [2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
+  searchValue: string | undefined;
+  
+   elimir: boolean = true;
 
   constructor(public server: ServerService, private ui: UiService, private router: Router) { }
 
@@ -141,5 +145,9 @@ export class MemosComponent implements OnInit {
     doc.save('reporte.pdf');
   
   }
+   clear(table: Table) {
+        table.clear();
+        this.searchValue = ''
+    }
 
 }

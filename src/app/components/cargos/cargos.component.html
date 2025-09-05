@@ -1,17 +1,30 @@
 <div class="d-flex flex-column w-100 p-4 content--standard entitylist--standard">
-    <div class="d-flex w-100 mb-4">
-        <h1 class="text-4xl font-bold text-white ">Cargos</h1>
-        <div class="ms-md-auto"></div>
-        <button (click)="remove()" class="btn btn--danger text--desktop02 px-4">
-            <i class="fa fa-times me-2"></i>
-            Eliminar seleccion
+    <div class="d-flex w-100 mb-4 space-x-2 bg-white  rounded-md p-2 border-gray-300 border-solid border-2">
+         <button (click)="create()" class="hover:bg-slate-200 px-2 rounded-md border-solid border-2 border-gray-300">
+            <i class="pi pi-plus text-xs "></i>
+            Nuevo
         </button>
-        <button (click)="create()" class="btn btn--standard text--desktop02 px-4 ms-3 rounded-md">
-            <i class="fa fa-plus me-2"></i>
-            Crear Cargo
+        <button (click)="remove()" [disabled]="elimir" class="px-2 rounded-md border-solid border-2 text-black  hover:color-white hover:cursor-pointer hover:bg-red-200 disabled:!text-gray-300 disabled:border-gray-200 disabled:bg-transparent disabled:hover:cursor-default">
+            <i class="pi pi-trash me-2 text-inherit"></i>
+             Eliminar
         </button>
+       
     </div>
-    <p-table tableStyleClass="bg-white" [value]="cargos" [paginator]="false" responsiveLayout="scroll" currentPageReportTemplate="{{pagination.count}} cargos">
+    <p-table #dt1 tableStyleClass="bg-white" [globalFilterFields]="['nombre', 'status']" [value]="cargos" [paginator]="true" [rows]="10" responsiveLayout="scroll" currentPageReportTemplate="{{pagination.count}} cargos">
+        <ng-template pTemplate="caption" class="w-full flex justify-between">
+        <div class="flex align-items-center w-full" >
+            <p-button class="p-button-clear" label="Clear" [outlined]="true" icon="pi pi-filter-slash" (click)="clear(dt1)" ></p-button>
+                <div class="text-center text-xl font-bold text-black m-auto">
+                    <h1 class="text-center">Usuarios</h1>
+                </div>
+            <p-iconfield iconPosition="left" class="ml-auto border-solid border-1 p-1 border-black rounded-xl">
+                <p-inputicon>
+                    <i class="pi pi-search"></i>
+                </p-inputicon>
+                <input class="bg-transparent border-none focus:shadow-none" pInputText #bod type="text" (input)="dt1.filterGlobal(bod.value, 'contains')" placeholder="Search keyword" />
+            </p-iconfield>
+        </div>
+    </ng-template>
         <ng-template pTemplate="header" >
             <tr class="h-[85px] text-center">
                 <th  style="width: 20px; ">

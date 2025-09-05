@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import { ServerService } from 'src/app/services/server';
 import { Router } from '@angular/router';
 import { Users } from 'src/app/models/users';
@@ -7,6 +7,7 @@ import { Departamentos } from 'src/app/models/departamentos';
 import { Roles } from 'src/app/models/roles';
 import { Cargos } from 'src/app/models/cargos';
 import { UiService } from 'src/app/services/ui.service';
+import { Table } from 'primeng/table';
 
 
 
@@ -17,20 +18,27 @@ import { UiService } from 'src/app/services/ui.service';
 })
 export class UsersComponent implements OnInit {
   public users: Users[] = [];
+  public usersInf: any[] = [];
   public departamentos: Departamentos[] = [];
   public roles: Roles[] = [];
   public cargos: Cargos[] = [];
   public filter: Users = new Users();
   public pagination: Pagination = new Pagination();
+   searchValue: string | undefined;
+  
+   elimir: boolean = true;
 
-  constructor(public server: ServerService, private router: Router , private ui: UiService) { }
+    
+
+  constructor(public server: ServerService, private router: Router , private ui: UiService, private cd: ChangeDetectorRef) { }
  
 
   async ngOnInit(){
-    await this.search();
-   await this.getDepartamentos();
-    await this.getCargos();
-    await this.getUsers();
+    this.usersInf = await this.server.getUsersInf();
+    this.cd.detectChanges();
+    await this.checkableselected();
+    
+    console.log(this.usersInf);
   }
   read(id: string) {
     this.router.navigate([`user/${id}`]);
@@ -38,53 +46,28 @@ export class UsersComponent implements OnInit {
 create() {
   this.router.navigate(['user']);
 }
-async search(pagination: Pagination = new Pagination) {
-  this.pagination.page = pagination.page;
-
-  await this.getUsers()
-}
 
 async remove() {
-  const items: any = this.users.filter((x: any) => x.$_select);
+  const items: any = this.usersInf.filter((x: any) => x.$_select);
   for (const item of items) {
       await this.server.logicDeleteusers(item);
   }
 
-  this.search();
-
   this.ui.messageSuccess(`${items.length} elementos eliminados.`);
 }
 
-  async getUsers() {
-    this.users = (await this.server.getAllUsers(new Pagination(1, 10000)))?.items;
-    console.log(this.users);
-  }
-  async getDepartamentos() {
-    this.departamentos = (await this.server.getAllDepartamentos(new Pagination(1, 1000)))?.items;
-    console.log(this.departamentos);
-  }
-  async getCargos() {
-    this.cargos = (await this.server.getAllCargos(new Pagination(1, 1000)))?.items;
-    console.log(this.cargos);
-  }
 
-  getCargo(id:number){
-    let aux;
-    for (const cargo of this.cargos) {
-      if(cargo.id == id){
-        aux = cargo.nombre;
+  clear(table: Table) {
+        table.clear();
+        this.searchValue = ''
+    }
+    async checkableselected(){
+       const items: any = this.usersInf.filter((x: any) => x.$_select);
+      if(items.length <= 0){
+        this.elimir = true;
+      }else{
+        this.elimir = false;
       }
     }
-    return aux
-  }
 
-  getDto(id:number){
-    let aux;
-    for (const dto of this.departamentos) {
-      if(dto.id == id){
-        aux = dto.nombre_departamento;
-      }
-    }
-    return aux
-  }
 }

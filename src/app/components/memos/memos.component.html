@@ -19,7 +19,21 @@
             Enviar un Memo
         </button>
     </div>
-    <p-table tableStyleClass="bg-white" [paginator]="true" [rows]="10" [value]="memosFilter" responsiveLayout="scroll" currentPageReportTemplate="{{pagination.count}} memos">
+    <p-table #dt1 tableStyleClass="bg-white" [paginator]="true" [rows]="5" [value]="memosFilter" responsiveLayout="scroll" currentPageReportTemplate="{{pagination.count}} memos" [globalFilterFields]="['fecha','codigo_memo','asunto', 'codigo_departamento', 'status']">
+         <ng-template pTemplate="caption" class="w-full flex justify-between">
+        <div class="flex align-items-center w-full" >
+            <p-button class="p-button-clear" label="Clear" [outlined]="true" icon="pi pi-filter-slash" (click)="clear(dt1)" ></p-button>
+                <div class="text-center text-xl font-bold text-black m-auto">
+                    <h1 class="text-center">{{server.user.tipo == 'admin' ? 'Memos' : 'Memos recibidos'}}</h1> 
+                </div>
+            <p-iconfield iconPosition="left" class="ml-auto border-solid border-1 p-1 border-black rounded-xl">
+                <p-inputicon>
+                    <i class="pi pi-search"></i>
+                </p-inputicon>
+                <input class="bg-transparent border-none focus:shadow-none" pInputText #bod type="text" (input)="dt1.filterGlobal(bod.value, 'contains')" placeholder="Search keyword" />
+            </p-iconfield>
+        </div>
+    </ng-template>
         <ng-template pTemplate="header" >
             <tr class="h-[85px] text-center">
                 <th class="text--desktop02 text-center">
@@ -63,34 +77,34 @@
         <ng-template pTemplate="body" let-item>
             <tr class="cursor-pointer" (dblclick)="read(item.id)">
                 <td  class="text-center">
-                    <a>
+                    
                         {{item.fecha | date: 'dd/MM/yyyy'}}
-                    </a>
+                    
                 </td>
                 <td class="text-center">
-                    <a>
+                    
                         {{item.codigo_memo}}
-                    </a>
+                    
                 </td>
                 <td class="text-center">
-                    <a>
+                    
                         {{getNameDepartamento(item.fromDepartamento)}}
-                    </a>
+                  
                 </td>
                 <td class="text-center">
-                    <a>
+                    
                        {{getNameDepartamento(item.toDepartamento)}}
-                    </a>
+                    
                 </td>
                 <td class="text-center">
-                    <a>
+                    
                         {{item.asunto}}
-                    </a>
+                    
                 </td>
-                <td class="text-center">
-                    <a class="text-ellipsis">
-                        {{item.contenido}}
-                    </a>
+                <td class="text-center !text-ellipsis !overflow-hidden max-h-[100px]">
+                        <p class="!text-ellipsis overflow-hidden  max-h-[100px]"> 
+                            {{item.contenido}}
+                        </p>
                 </td>
 
                 <td class="text-center">
