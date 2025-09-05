@@ -104,6 +104,27 @@ export class ServerService {
         return res;
     }
 
+    async getUsersInf(){
+        let res: any;
+        try {
+            const json = await fetch(`${endpoint}/users/view/allusers`, {
+                method: 'get',
+                headers: {
+                    'Authorization': this.token?.id
+                }
+            });
+            res = await json.json();
+        } catch (ex) {
+            console.error(ex);
+            res = [];
+        } finally {
+            if (res.object?.message?.error) {
+                this.ui.messageError(res.object.message.error);
+            }
+        }
+        return res;
+    }
+
     async getUser(id: any) {
         let res: any;
         try {
