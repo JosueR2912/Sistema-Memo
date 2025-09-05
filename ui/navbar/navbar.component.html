@@ -1,0 +1,40 @@
+<div>
+    <p-sidebar #sidebarRef [(visible)]="sidebarVisible" class="w-full">
+      <div class="flex items-center justify-between p-2">
+        <img src="../../../../assets/img/LOGOS CORPOLARA 2.png" height="40" class="mr-2 h-14 w-[75%]">
+        <button class="rounded-full border-2 border-sky-700 px-2 py-1 text-xs hover:bg-sky-700 hover:text-white" (click)="closeCallback($event)">X</button>
+
+      </div>
+       <p-menu [model]="items" class="w-full [&>.p-component]:w-full">
+
+       </p-menu>
+    </p-sidebar>
+</div>
+
+
+<p-menubar class="w-full">
+    <ng-template pTemplate="start">
+        <div class="flex p-2">
+            <button type="button" (click)="sidebarVisible = true">
+                <i class="pi pi-fw pi-bars text-black text-2xl"></i>
+            </button>
+            <div>
+                <img src="../../../../assets/img/LOGOS CORPOLARA 3.png" height="40" class="mr-2 h-10 w-44">
+            </div>
+        </div>
+    </ng-template>
+     
+
+    <ng-template pTemplate="end">
+        <div class="flex space-x-2 text-black [&>p]:uppercase items-center">
+            <p>
+                {{server.user.nombre + ' ' + server.user.apellido}}
+            </p>
+            <p-button [rounded]="true" severity="secondary" [outlined]="true" (onClick)="menu.toggle($event)">
+                <i class="pi pi-fw pi-user"></i>
+            </p-button>
+            <p-tieredMenu #menu [model]="itemsUser" [popup]="true"></p-tieredMenu>
+           
+        </div>
+    </ng-template>
+</p-menubar>

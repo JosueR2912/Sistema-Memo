@@ -1,0 +1,63 @@
+<div class="w-100 flex justify-center mt-4 p-4">
+<h2 class="text-4xl font-bold text-center text-white">
+    Memo
+</h2>
+ <div class="d-flex flex-col w-[800px] bg-white mt-20 h-[1100px] relative p-2">
+    <div class="ml-3 w-full flex justify-center" *ngIf="auxdate >= dateChange">
+        <img class="w-[90%]" src="../../../../assets/img/CINTILLO SUPERIOR - HOJA MEMBRETADA.png" alt="">
+    </div>
+    <div class="ml-6  flex" *ngIf="auxdate < dateChange">
+        <img class="w-40 h-16" src="../../../../assets/img/LOGOS CORPOLARA 3.png" alt="">
+    </div>
+    
+    <div class="w-full flex justify-center font-bold">
+        M E M O R A N D O
+    </div>
+    <div class="ml-12 font-bold">
+        <p>N° {{body.codigo_memo}}</p>
+        <br>
+        <p>Para: {{getdepartamento(body.toDepartamento)}}</p>
+        <p *ngIf="body.copia_para !== 0 && getCopias() != 'undefined'">Copia para: {{getCopias()}}</p>
+        <p>De: {{getdepartamento(body.fromDepartamento)}}</p>
+        <p>Fecha: {{body.fecha | date:'dd/MM/yyyy'}}</p>
+        <p>Asunto: {{body.asunto}}</p>
+    </div>
+    <div class="ml-16 mt-6 text-justify mx-auto w-[88%] max-h-[400px] overflow-y-auto">
+        <p>{{body.contenido}}</p>
+    </div>
+    <div class="flex justify-center w-full font-bold flex-col items-center absolute bottom-52">
+        <p>
+            Atentamente
+        </p>
+        <img [src]="getFirma(body.id_user)" alt="" class="w-36 h-20">
+        <p class="uppercase">
+            {{getUser(body.id_user)}}
+        </p>
+        <p class="uppercase">
+            {{getCargoUser(body.id_user)}}
+        </p>
+        <p class="text-center text-xs w-[50%]" *ngIf="getProvidencia(body.id_user) != ''">
+            Segun Providencia Administrativa {{getProvidencia(body.id_user)}}
+        </p>
+    </div>
+    <div class="absolute bottom-[190px] flex ml-10">
+        <p class="font-bold">{{body.redactadoPor}}</p>
+    </div>
+    <div class="absolute bottom-0 flex w-full justify-center" *ngIf="auxdate >= dateChange">
+        <img class="w-full h-48 -ml-4 object-cover object-center" src="../../../../assets/img/CINTILLO 2.png" alt="">
+    </div>
+     <div class="absolute bottom-0 flex w-full justify-center" *ngIf="auxdate < dateChange">
+        <img class="w-[95%] h-48 -ml-4" src="../../../../assets/img/footerMemo.png" alt="">
+    </div>
+ </div>
+ <div *ngIf="body.id_user != server.user.id || server.user.tipo == 'admin'">
+    <select class="p-multiselect w-[70%]" name="status" id="status" [(ngModel)]="body.status" (change)="changeStatus()">
+        <option value="ATENDIDO">ATENDIDO</option>
+        <option value="EN PROCESO">EN PROCESO</option>
+        <option *ngIf="server.user.tipo == 'admin'" value="SIN ATENDER">SIN ATENDER</option>
+    </select>
+ </div>
+ <div>
+    <button class="btn btn--standard text--desktop02 px-4 ms-3 rounded-md" (click)="generatePDF()">Generar PDF</button>
+ </div>
+</div>
